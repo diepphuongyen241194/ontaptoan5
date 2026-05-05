@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài tập kéo thả Toán lớp 2</title>
+<style>
+    body{
+        font-family: Arial;
+        background:#f0f8ff;
+        padding:20px;
+    }
+    h2{
+        text-align:center;
+    }
+    .container{
+        max-width:800px;
+        margin:auto;
+        background:white;
+        padding:20px;
+        border-radius:10px;
+        box-shadow:0 0 10px rgba(0,0,0,0.1);
+    }
+    .question{
+        margin-bottom:20px;
+        padding:10px;
+        border-bottom:1px dashed #ccc;
+    }
+    .dropzone{
+        display:inline-block;
+        min-width:120px;
+        padding:10px;
+        border:2px dashed #888;
+        border-radius:8px;
+        margin-left:10px;
+        text-align:center;
+    }
+    .options{
+        margin-top:20px;
+        padding:10px;
+        background:#eef;
+        border-radius:10px;
+    }
+    .option{
+        display:inline-block;
+        padding:10px 15px;
+        background:#4CAF50;
+        color:white;
+        margin:5px;
+        border-radius:8px;
+        cursor:grab;
+    }
+    button{
+        margin-top:20px;
+        padding:10px 20px;
+        font-size:16px;
+        background:#2196F3;
+        color:white;
+        border:none;
+        border-radius:8px;
+        cursor:pointer;
+    }
+    #result{
+        margin-top:20px;
+        font-weight:bold;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>🎯 Bài tập kéo thả Toán lớp 2</h2>
+
+<div class="question">
+Câu 1: Số 456 km đọc là:
+<div class="dropzone" data-answer="B"></div>
+</div>
+
+<div class="question">
+Câu 2: Số liền trước của 290 là:
+<div class="dropzone" data-answer="289"></div>
+</div>
+
+<div class="question">
+Câu 3: Số đo lớn nhất là:
+<div class="dropzone" data-answer="1 km"></div>
+</div>
+
+<div class="question">
+Câu 4: 549 + 129 =
+<div class="dropzone" data-answer="678"></div>
+</div>
+
+<div class="question">
+Câu 5: 30 học sinh chia 5 tổ, mỗi tổ có:
+<div class="dropzone" data-answer="6"></div>
+</div>
+
+<div class="options">
+<h3>Kéo đáp án vào ô:</h3>
+<div class="option" draggable="true">B</div>
+<div class="option" draggable="true">289</div>
+<div class="option" draggable="true">1 km</div>
+<div class="option" draggable="true">678</div>
+<div class="option" draggable="true">6</div>
+</div>
+
+<button onclick="checkAnswers()">Kiểm tra</button>
+<div id="result"></div>
+
+</div>
+
+<script>
+let draggedItem = null;
+
+document.querySelectorAll('.option').forEach(item => {
+    item.addEventListener('dragstart', function(){
+        draggedItem = this;
+    });
+});
+
+document.querySelectorAll('.dropzone').forEach(zone => {
+    zone.addEventListener('dragover', function(e){
+        e.preventDefault();
+    });
+
+    zone.addEventListener('drop', function(){
+        this.innerHTML = "";
+        this.appendChild(draggedItem);
+    });
+});
+
+function checkAnswers(){
+    let correct = 0;
+    let total = document.querySelectorAll('.dropzone').length;
+
+    document.querySelectorAll('.dropzone').forEach(zone => {
+        let answer = zone.getAttribute("data-answer");
+        let user = zone.innerText.trim();
+
+        if(user === answer){
+            correct++;
+            zone.style.borderColor = "green";
+        }else{
+            zone.style.borderColor = "red";
+        }
+    });
+
+    document.getElementById("result").innerText =
+        "Bạn đúng " + correct + "/" + total + " câu 🎉";
+}
+</script>
+
+</body>
+</html>
